@@ -1,0 +1,40 @@
+name: flutter_auth_app
+description: A new Flutter application.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # state management library that helps implement the BLoC
+  bloc: ^7.0.0
+  # Flutter Widgets that make it easy to implement the BLoC
+  flutter_bloc: ^7.0.0
+  # builds a navigation stack in response to changes in the state
+  flow_builder: ^0.0.2
+  # form representation in dart and validation
+  formz: ^0.4.0
+  # for code annotation
+  meta: ^1.3.0
+  # for implementing value based equality without needing to explicitly override == and hashCode.
+  equatable: ^2.0.0
+  # for using Firebase Core API
+  firebase_core: ^1.1.0
+  # for Firebase Auth
+  firebase_auth: ^1.1.2
+  # for Google Sign-In API
+  google_sign_in: ^5.0.2
+  # Apple styled icons
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+flutter:
+  uses-material-design: true
