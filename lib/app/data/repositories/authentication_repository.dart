@@ -15,6 +15,8 @@ class LogInWithGoogleFailure implements Exception {}
 
 class LogOutFailure implements Exception {}
 
+class SendResetEmailFailure implements Exception {}
+
 class AuthenticationRepository {
   static const userCacheKey = '__user_cache_key__';
 
@@ -69,6 +71,14 @@ class AuthenticationRepository {
       await _firebaseAuth.signInWithCredential(credential);
     } on Exception {
       throw LogInWithGoogleFailure();
+    }
+  }
+
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } on Exception {
+      throw SendResetEmailFailure();
     }
   }
 

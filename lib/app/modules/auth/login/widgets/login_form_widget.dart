@@ -4,6 +4,7 @@ import 'package:formz/formz.dart';
 
 import '../login.dart';
 import '../../sign_up/sign_up.dart';
+import '../../reset_password/reset_password.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -32,6 +33,7 @@ class LoginForm extends StatelessWidget {
               _PasswordInput(),
               const SizedBox(height: 8.0),
               _LoginButton(),
+              _ForgotPasswordButton(),
               const SizedBox(height: 8.0),
               _GoogleLoginButton(),
               const SizedBox(height: 4.0),
@@ -51,7 +53,6 @@ class _EmailInput extends StatelessWidget {
       buildWhen: (previous, current) => previous.email != current.email,
       builder: (context, state) {
         return TextField(
-          key: const Key('loginForm_emailInput_textField'),
           onChanged: (email) => context.read<LoginCubit>().emailChanged(email),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
@@ -72,7 +73,6 @@ class _PasswordInput extends StatelessWidget {
       buildWhen: (previous, current) => previous.password != current.password,
       builder: (context, state) {
         return TextField(
-          key: const Key('loginForm_passwordInput_textField'),
           onChanged: (password) =>
               context.read<LoginCubit>().passwordChanged(password),
           obscureText: true,
@@ -96,7 +96,6 @@ class _LoginButton extends StatelessWidget {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
             : ElevatedButton(
-                key: const Key('loginForm_continue_raisedButton'),
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
@@ -113,17 +112,26 @@ class _LoginButton extends StatelessWidget {
   }
 }
 
+class _ForgotPasswordButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () => Navigator.of(context).push<void>(ResetPasswordView.route()),
+      child: Text(
+        'Forgot Password?',
+      ),
+    );
+  }
+}
+
 class _GoogleLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return ElevatedButton(
-      key: const Key('loginForm_googleLogin_raisedButton'),
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
-        primary: theme.accentColor,
       ),
       child: const Text('SIGN IN WITH GOOGLE'),
       onPressed: () => context.read<LoginCubit>().logInWithGoogle(),
@@ -134,13 +142,10 @@ class _GoogleLoginButton extends StatelessWidget {
 class _SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return TextButton(
-      key: const Key('loginForm_createAccount_flatButton'),
       onPressed: () => Navigator.of(context).push<void>(SignUpView.route()),
       child: Text(
         'CREATE ACCOUNT',
-        style: TextStyle(color: theme.primaryColor),
       ),
     );
   }

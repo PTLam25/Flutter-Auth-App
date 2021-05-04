@@ -17,8 +17,9 @@ class ResetPasswordView extends StatelessWidget {
       appBar: AppBar(title: const Text('Reset Password')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Text('RESET PASSWORD PAGE'),
+        child: BlocProvider<ResetPasswordCubit>(
+          create: (_) => ResetPasswordCubit(context.read<AuthenticationRepository>()),
+          child: const ResetPasswordForm(),
         ),
       ),
     );

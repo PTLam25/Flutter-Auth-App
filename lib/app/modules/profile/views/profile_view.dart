@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../auth/change_password/change_password.dart';
-import '../../auth/reset_password/reset_password.dart';
 import '../../core/bloc/app_bloc.dart';
 
 class ProfileView extends StatelessWidget {
@@ -41,13 +40,6 @@ class ProfileView extends StatelessWidget {
                 'CHANGE PASSWORD',
               ),
             ),
-            TextButton(
-              onPressed: () =>
-                  Navigator.of(context).push<void>(ResetPasswordView.route()),
-              child: Text(
-                'RESET PASSWORD',
-              ),
-            )
           ],
         ),
       ),
