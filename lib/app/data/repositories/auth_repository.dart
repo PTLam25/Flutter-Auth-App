@@ -1,1 +1,0 @@
-// Firebase auth and google sign in API
