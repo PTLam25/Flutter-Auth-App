@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:google_sign_in/google_sign_in.dart';
@@ -15,6 +16,12 @@ class LogInWithGoogleFailure implements Exception {}
 class LogOutFailure implements Exception {}
 
 class AuthenticationRepository {
+  static const userCacheKey = '__user_cache_key__';
+
+  final firebase_auth.FirebaseAuth _firebaseAuth;
+  final GoogleSignIn _googleSignIn;
+  final SharedPreferences _storage;
+
   AuthenticationRepository({
     required SharedPreferences storage,
     firebase_auth.FirebaseAuth? firebaseAuth,
@@ -23,20 +30,21 @@ class AuthenticationRepository {
         _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance,
         _googleSignIn = googleSignIn ?? GoogleSignIn.standard();
 
-  final firebase_auth.FirebaseAuth _firebaseAuth;
-  final GoogleSignIn _googleSignIn;
-  final SharedPreferences _storage;
-
   Stream<User> get user {
     return _firebaseAuth.authStateChanges().map((firebaseUser) {
-
       final user = firebaseUser == null ? User.empty : firebaseUser.toUser;
+      if (user != User.empty) {
+        _storage.setString(userCacheKey, json.encode(user.toJson()));
+      }
       return user;
     });
   }
 
   User get currentUser {
-    return User.empty;
+    final String? userJsonEncodedData = _storage.getString(userCacheKey);
+    return userJsonEncodedData != null
+        ? User.fromJson(json.decode(userJsonEncodedData))
+        : User.empty;
   }
 
   Future<void> signUp({required String email, required String password}) async {
