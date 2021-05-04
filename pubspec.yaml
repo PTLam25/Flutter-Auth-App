@@ -15,6 +15,7 @@ dependencies:
   bloc: ^7.0.0
   # Flutter Widgets that make it easy to implement the BLoC
   flutter_bloc: ^7.0.0
+
   # unawaited method
   pedantic: ^1.11.0
   # builds a navigation stack in response to changes in the state
@@ -34,7 +35,11 @@ dependencies:
   firebase_auth: ^1.1.2
   # for Google Sign-In API
   google_sign_in: ^5.0.2
+  # for Facebook Sign-In API
+  flutter_login_facebook: ^1.0.1
 
+  # social medias sign in buttons
+  flutter_signin_button: ^2.0.0
   # Apple styled icons
   cupertino_icons: ^1.0.2
 
