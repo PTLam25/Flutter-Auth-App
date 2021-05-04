@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/models.dart';
 
@@ -15,16 +16,20 @@ class LogOutFailure implements Exception {}
 
 class AuthenticationRepository {
   AuthenticationRepository({
+    required SharedPreferences storage,
     firebase_auth.FirebaseAuth? firebaseAuth,
     GoogleSignIn? googleSignIn,
-  })  : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance,
+  })  : _storage = storage,
+        _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance,
         _googleSignIn = googleSignIn ?? GoogleSignIn.standard();
 
   final firebase_auth.FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
+  final SharedPreferences _storage;
 
   Stream<User> get user {
     return _firebaseAuth.authStateChanges().map((firebaseUser) {
+
       final user = firebaseUser == null ? User.empty : firebaseUser.toUser;
       return user;
     });
