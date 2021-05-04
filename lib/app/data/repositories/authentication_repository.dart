@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,6 +13,8 @@ class SignUpFailure implements Exception {}
 class LogInWithEmailAndPasswordFailure implements Exception {}
 
 class LogInWithGoogleFailure implements Exception {}
+
+class LogInWithFacebookFailure implements Exception {}
 
 class LogOutFailure implements Exception {}
 
@@ -24,15 +27,18 @@ class AuthenticationRepository {
 
   final firebase_auth.FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
+  final FacebookLogin _facebookSignIn;
   final SharedPreferences _storage;
 
   AuthenticationRepository({
     required SharedPreferences storage,
     firebase_auth.FirebaseAuth? firebaseAuth,
     GoogleSignIn? googleSignIn,
+    FacebookLogin? facebookSignIn,
   })  : _storage = storage,
         _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance,
-        _googleSignIn = googleSignIn ?? GoogleSignIn.standard();
+        _googleSignIn = googleSignIn ?? GoogleSignIn.standard(),
+        _facebookSignIn = facebookSignIn ?? FacebookLogin();
 
   Stream<User> get user {
     return _firebaseAuth.authStateChanges().map((firebaseUser) {
@@ -76,6 +82,31 @@ class AuthenticationRepository {
     }
   }
 
+  Future<void> logInWithFacebook() async {
+    try {
+      final FacebookLoginResult response = await _facebookSignIn.logIn(
+          permissions: [
+            FacebookPermission.publicProfile,
+            FacebookPermission.email
+          ]);
+
+      switch (response.status) {
+        case FacebookLoginStatus.success:
+          final FacebookAccessToken fbToken = response.accessToken!;
+          final firebase_auth.AuthCredential authCredential =
+              firebase_auth.FacebookAuthProvider.credential(fbToken.token);
+          await _firebaseAuth.signInWithCredential(authCredential);
+          break;
+        case FacebookLoginStatus.cancel:
+          break;
+        case FacebookLoginStatus.error:
+          throw LogInWithFacebookFailure();
+      }
+    } on Exception {
+      throw LogInWithFacebookFailure();
+    }
+  }
+
   Future<void> sendPasswordResetEmail(String email) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
@@ -112,6 +143,7 @@ class AuthenticationRepository {
       await Future.wait([
         _firebaseAuth.signOut(),
         _googleSignIn.signOut(),
+        _facebookSignIn.logOut(),
       ]);
     } on Exception {
       throw LogOutFailure();

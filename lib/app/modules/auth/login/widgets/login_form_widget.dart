@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import '../login.dart';
 import '../../sign_up/sign_up.dart';
 import '../../reset_password/reset_password.dart';
@@ -27,17 +27,13 @@ class LoginForm extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: 16.0),
               _EmailInput(),
-              const SizedBox(height: 8.0),
               _PasswordInput(),
-              const SizedBox(height: 8.0),
               _LoginButton(),
               _ForgotPasswordButton(),
-              const SizedBox(height: 8.0),
-              _GoogleLoginButton(),
-              const SizedBox(height: 4.0),
               _SignUpButton(),
+              _GoogleLoginButton(),
+              _FacebookLoginButton(),
             ],
           ),
         ),
@@ -127,14 +123,19 @@ class _ForgotPasswordButton extends StatelessWidget {
 class _GoogleLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-      ),
-      child: const Text('SIGN IN WITH GOOGLE'),
+    return SignInButton(
+      Buttons.Google,
       onPressed: () => context.read<LoginCubit>().logInWithGoogle(),
+    );
+  }
+}
+
+class _FacebookLoginButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SignInButton(
+      Buttons.Facebook,
+      onPressed: () => context.read<LoginCubit>().logInWithFacebbok(),
     );
   }
 }
