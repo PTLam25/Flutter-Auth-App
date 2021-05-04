@@ -17,6 +17,8 @@ class LogOutFailure implements Exception {}
 
 class SendResetEmailFailure implements Exception {}
 
+class UpdatePasswordFailure implements Exception {}
+
 class AuthenticationRepository {
   static const userCacheKey = '__user_cache_key__';
 
@@ -79,6 +81,15 @@ class AuthenticationRepository {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
     } on Exception {
       throw SendResetEmailFailure();
+    }
+  }
+
+  Future<void> updatePassword(String password) async {
+    try {
+      final firebase_auth.User? firebaseUser = _firebaseAuth.currentUser;
+      await firebaseUser?.updatePassword(password);
+    } on Exception {
+      throw UpdatePasswordFailure();
     }
   }
 

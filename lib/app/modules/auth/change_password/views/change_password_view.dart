@@ -17,8 +17,9 @@ class ChangePasswordView extends StatelessWidget {
       appBar: AppBar(title: const Text('Change password')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Text('CHANGE PASSWORD PAGE'),
+        child: BlocProvider<ChangePasswordCubit>(
+          create: (_) => ChangePasswordCubit(context.read<AuthenticationRepository>()),
+          child: const ChangePasswordForm(),
         ),
       ),
     );
