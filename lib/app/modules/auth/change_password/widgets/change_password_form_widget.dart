@@ -17,6 +17,11 @@ class ChangePasswordForm extends StatelessWidget {
             ..showSnackBar(
               const SnackBar(content: Text('Sign Up Failure')),
             );
+        } else if (state.status.isSubmissionSuccess) {
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Password was changed successfully')),
+          );
         }
       },
       child: Align(
@@ -46,6 +51,7 @@ class _OldPasswordInput extends StatelessWidget {
           onChanged: (oldPassword) => context
               .read<ChangePasswordCubit>()
               .oldPasswordChanged(oldPassword),
+          obscureText: true,
           decoration: InputDecoration(
             labelText: 'Old Password',
             errorText: state.oldPassword.invalid ? 'Invalid password' : null,

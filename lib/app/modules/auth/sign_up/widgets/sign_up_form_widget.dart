@@ -17,6 +17,8 @@ class SignUpForm extends StatelessWidget {
             ..showSnackBar(
               const SnackBar(content: Text('Sign Up Failure')),
             );
+        } else if (state.status.isSubmissionSuccess) {
+          Navigator.pop(context);
         }
       },
       child: Align(

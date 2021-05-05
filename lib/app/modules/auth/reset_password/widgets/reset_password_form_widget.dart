@@ -17,6 +17,11 @@ class ResetPasswordForm extends StatelessWidget {
             ..showSnackBar(
               const SnackBar(content: Text('Reset Password Failure')),
             );
+        } else if (state.status.isSubmissionSuccess) {
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Password reset email was sent')),
+          );
         }
       },
       child: Align(
