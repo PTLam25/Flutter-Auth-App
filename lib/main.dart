@@ -8,9 +8,13 @@ import './app/modules/core/core.dart';
 
 void main() async {
   Bloc.observer = AppBlocObserver();
+
+  // ensure that there is WidgetsBinding before Firebase initialization
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   final SharedPreferences storage = await SharedPreferences.getInstance();
+
   final authenticationRepository = AuthenticationRepository(storage: storage);
   // try to get user
   await authenticationRepository.user.first;
