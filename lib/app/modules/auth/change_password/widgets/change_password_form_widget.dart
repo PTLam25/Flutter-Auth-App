@@ -25,11 +25,8 @@ class ChangePasswordForm extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _OldPasswordInput(),
-            const SizedBox(height: 8.0),
             _NewPasswordInput(),
-            const SizedBox(height: 8.0),
             _ConfirmNewPasswordInput(),
-            const SizedBox(height: 8.0),
             _ChangePasswordButton(),
           ],
         ),
@@ -50,9 +47,8 @@ class _OldPasswordInput extends StatelessWidget {
               .read<ChangePasswordCubit>()
               .oldPasswordChanged(oldPassword),
           decoration: InputDecoration(
-            labelText: 'old password',
-            helperText: '',
-            errorText: state.oldPassword.invalid ? 'invalid password' : null,
+            labelText: 'Old Password',
+            errorText: state.oldPassword.invalid ? 'Invalid password' : null,
           ),
         );
       },
@@ -73,9 +69,8 @@ class _NewPasswordInput extends StatelessWidget {
               .newPasswordChanged(newPassword),
           obscureText: true,
           decoration: InputDecoration(
-            labelText: 'new password',
-            helperText: '',
-            errorText: state.newPassword.invalid ? 'invalid password' : null,
+            labelText: 'New Password',
+            errorText: state.newPassword.invalid ? 'Invalid password' : null,
           ),
         );
       },
@@ -97,10 +92,9 @@ class _ConfirmNewPasswordInput extends StatelessWidget {
               .confirmedNewPasswordChanged(confirmedNewPassword),
           obscureText: true,
           decoration: InputDecoration(
-            labelText: 'confirm new password',
-            helperText: '',
+            labelText: 'Confirm New Password',
             errorText: state.confirmedNewPassword.invalid
-                ? 'passwords do not match'
+                ? 'Passwords do not match'
                 : null,
           ),
         );
@@ -122,14 +116,13 @@ class _ChangePasswordButton extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
-                  primary: Colors.orangeAccent,
                 ),
                 onPressed: state.status.isValidated
                     ? () => context
                         .read<ChangePasswordCubit>()
                         .changePasswordFormSubmitted()
                     : null,
-                child: const Text('CHANGE PASSWORD'),
+                child: const Text('Change password'),
               );
       },
     );

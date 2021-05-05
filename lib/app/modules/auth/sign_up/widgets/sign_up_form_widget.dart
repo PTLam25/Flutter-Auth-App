@@ -25,11 +25,8 @@ class SignUpForm extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _EmailInput(),
-            const SizedBox(height: 8.0),
             _PasswordInput(),
-            const SizedBox(height: 8.0),
             _ConfirmPasswordInput(),
-            const SizedBox(height: 8.0),
             _SignUpButton(),
           ],
         ),
@@ -45,12 +42,10 @@ class _EmailInput extends StatelessWidget {
       buildWhen: (previous, current) => previous.email != current.email,
       builder: (context, state) {
         return TextField(
-          key: const Key('signUpForm_emailInput_textField'),
           onChanged: (email) => context.read<SignUpCubit>().emailChanged(email),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            labelText: 'email',
-            helperText: '',
+            labelText: 'Email',
             errorText: state.email.invalid ? 'invalid email' : null,
           ),
         );
@@ -66,14 +61,12 @@ class _PasswordInput extends StatelessWidget {
       buildWhen: (previous, current) => previous.password != current.password,
       builder: (context, state) {
         return TextField(
-          key: const Key('signUpForm_passwordInput_textField'),
           onChanged: (password) =>
               context.read<SignUpCubit>().passwordChanged(password),
           obscureText: true,
           decoration: InputDecoration(
-            labelText: 'password',
-            helperText: '',
-            errorText: state.password.invalid ? 'invalid password' : null,
+            labelText: 'Password',
+            errorText: state.password.invalid ? 'Invalid password' : null,
           ),
         );
       },
@@ -90,16 +83,14 @@ class _ConfirmPasswordInput extends StatelessWidget {
           previous.confirmedPassword != current.confirmedPassword,
       builder: (context, state) {
         return TextField(
-          key: const Key('signUpForm_confirmedPasswordInput_textField'),
           onChanged: (confirmPassword) => context
               .read<SignUpCubit>()
               .confirmedPasswordChanged(confirmPassword),
           obscureText: true,
           decoration: InputDecoration(
-            labelText: 'confirm password',
-            helperText: '',
+            labelText: 'Confirm Password',
             errorText: state.confirmedPassword.invalid
-                ? 'passwords do not match'
+                ? 'Passwords do not match'
                 : null,
           ),
         );
@@ -117,17 +108,15 @@ class _SignUpButton extends StatelessWidget {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
             : ElevatedButton(
-                key: const Key('signUpForm_continue_raisedButton'),
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
-                  primary: Colors.orangeAccent,
                 ),
                 onPressed: state.status.isValidated
                     ? () => context.read<SignUpCubit>().signUpFormSubmitted()
                     : null,
-                child: const Text('SIGN UP'),
+                child: const Text('Sign Up'),
               );
       },
     );

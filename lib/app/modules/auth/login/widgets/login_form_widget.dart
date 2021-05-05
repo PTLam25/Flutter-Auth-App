@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import '../login.dart';
-import '../../sign_up/sign_up.dart';
+import 'package:formz/formz.dart';
+
 import '../../reset_password/reset_password.dart';
+import '../../sign_up/sign_up.dart';
+import '../login.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -52,9 +53,9 @@ class _EmailInput extends StatelessWidget {
           onChanged: (email) => context.read<LoginCubit>().emailChanged(email),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            labelText: 'email',
+            labelText: 'Email',
             helperText: '',
-            errorText: state.email.invalid ? 'invalid email' : null,
+            errorText: state.email.invalid ? 'Invalid email' : null,
           ),
         );
       },
@@ -73,9 +74,8 @@ class _PasswordInput extends StatelessWidget {
               context.read<LoginCubit>().passwordChanged(password),
           obscureText: true,
           decoration: InputDecoration(
-            labelText: 'password',
-            helperText: '',
-            errorText: state.password.invalid ? 'invalid password' : null,
+            labelText: 'Password',
+            errorText: state.password.invalid ? 'Invalid password' : null,
           ),
         );
       },
@@ -96,12 +96,11 @@ class _LoginButton extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
-                  primary: const Color(0xFFFFD600),
                 ),
                 onPressed: state.status.isValidated
                     ? () => context.read<LoginCubit>().logInWithCredentials()
                     : null,
-                child: const Text('LOGIN'),
+                child: const Text('Login'),
               );
       },
     );
@@ -112,8 +111,9 @@ class _ForgotPasswordButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => Navigator.of(context).push<void>(ResetPasswordView.route()),
-      child: Text(
+      onPressed: () =>
+          Navigator.of(context).push<void>(ResetPasswordView.route()),
+      child: const Text(
         'Forgot Password?',
       ),
     );
@@ -145,8 +145,8 @@ class _SignUpButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () => Navigator.of(context).push<void>(SignUpView.route()),
-      child: Text(
-        'CREATE ACCOUNT',
+      child: const Text(
+        'Sign Up',
       ),
     );
   }

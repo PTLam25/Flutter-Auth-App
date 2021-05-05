@@ -1,7 +1,5 @@
 part of 'change_password_cubit.dart';
 
-enum ConfirmPasswordValidationError { invalid }
-
 class ChangePasswordState extends Equatable {
   const ChangePasswordState({
     this.oldPassword = const Password.pure(),

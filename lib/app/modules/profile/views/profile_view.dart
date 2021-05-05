@@ -18,7 +18,6 @@ class ProfileView extends StatelessWidget {
         title: const Text('Profile'),
         actions: <Widget>[
           IconButton(
-            key: const Key('homePage_logout_iconButton'),
             icon: const Icon(Icons.exit_to_app),
             onPressed: () => context.read<AppBloc>().add(AppLogoutRequested()),
           )
@@ -37,7 +36,7 @@ class ProfileView extends StatelessWidget {
               onPressed: () =>
                   Navigator.of(context).push<void>(ChangePasswordView.route()),
               child: Text(
-                'CHANGE PASSWORD',
+                'Change Password',
               ),
             ),
           ],

@@ -98,7 +98,7 @@ class AuthenticationRepository {
           await _firebaseAuth.signInWithCredential(authCredential);
           break;
         case FacebookLoginStatus.cancel:
-          break;
+          throw LogInWithFacebookFailure();
         case FacebookLoginStatus.error:
           throw LogInWithFacebookFailure();
       }

@@ -25,7 +25,6 @@ class ResetPasswordForm extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _EmailInput(),
-            const SizedBox(height: 8.0),
             _ResetPasswordButton(),
           ],
         ),
@@ -45,9 +44,8 @@ class _EmailInput extends StatelessWidget {
               context.read<ResetPasswordCubit>().emailChanged(email),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            labelText: 'email',
-            helperText: '',
-            errorText: state.email.invalid ? 'invalid email' : null,
+            labelText: 'Email',
+            errorText: state.email.invalid ? 'Invalid email' : null,
           ),
         );
       },
@@ -68,14 +66,13 @@ class _ResetPasswordButton extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
-                  primary: Colors.orangeAccent,
                 ),
                 onPressed: state.status.isValidated
                     ? () => context
                         .read<ResetPasswordCubit>()
                         .passwordResetFormSubmitted()
                     : null,
-                child: const Text('RESET PASSWORD'),
+                child: const Text('Reset password'),
               );
       },
     );
