@@ -10,8 +10,6 @@ jobs:
       - checkout
       # run command after git pull
       - run: flutter doctor
-      # run test if there is
-      - run: flutter test
       # build release version for android
       - run: flutter build apk --release
       # get build file from the path and store it in the cloud, so everyone can has access to it
