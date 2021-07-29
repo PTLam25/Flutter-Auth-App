@@ -8,7 +8,7 @@ jobs:
     steps:
       # git clone repository from github to get the latest code version
       - checkout
-      # run command after git pull
+      # run command after git pull. change
       - run: flutter doctor
       # build release version for android
       - run: flutter build apk --release
