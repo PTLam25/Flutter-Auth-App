@@ -4,7 +4,7 @@ jobs:
   build:
     # use docker container to build application
     docker:
-      - image: curusci/flutter
+      - image: cirrusci/flutter
     steps:
       # git clone repository from github to get the latest code version
       - checkout
@@ -13,7 +13,7 @@ jobs:
       # run test if there is
       - run: flutter test
       # build release version for android
-      - run: flutter build apk --
+      - run: flutter build apk --release
       # get build file from the path and store it in the cloud, so everyone can has access to it
       - store_artifacts:
           path: build/app/outputs/flutter-apk/app-release.apk
